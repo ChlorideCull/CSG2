@@ -1,0 +1,21 @@
+This software is released under multiple licenses, roughly explained here.
+What license is used for each individual file is shown in the header at the
+file in question.
+
+* themes/
+	Licensed under the MIT License.
+	Themes are not considered linked with, or a derivative work of, the main
+	software.
+	The license is available in LICENSE-MIT.txt
+* site.example/
+	Licensed under the MIT License.
+	Sites are not considered linked with, or a derivative work of, the main
+	software.
+	The license is available in LICENSE-MIT.txt
+* docs/
+	Licensed under the GNU Free Documentation License, with no invariant
+	sections.
+	The license is available in LICENSE-FDL.txt
+
+All other files are licensed under the GNU AGPL, as shown in
+LICENSE-AGPL.txt
