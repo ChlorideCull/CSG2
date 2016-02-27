@@ -21,6 +21,6 @@ Run the following:
 ###Packaging
 Assuming `$pkgdir` is the package root, run the following:
 
-    cmake -DCMAKE_INSTALL_PREFIX:STRING=/ ..
+    cmake -DCMAKE_INSTALL_PREFIX:STRING=/usr ..
     make
     make DESTDIR=${pkgdir} install
