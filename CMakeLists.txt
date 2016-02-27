@@ -1,10 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 project(CSG2 NONE)
 
-if(NOT REALPATH)
-	message(WARNING "Set REALPATH to the final prefix (for example /usr) in case you're building for a package.")
-	set(REALPATH CMAKE_INSTALL_PREFIX)
-endif()
+set(REALPATH ${CMAKE_INSTALL_PREFIX})
 
 install(FILES serve.py DESTINATION lib/csg2)
 install(DIRECTORY docs DESTINATION share/doc/csg2)
