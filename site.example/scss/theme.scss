@@ -1,0 +1,9 @@
+$header-img: url('/rand/header.image'); /* Minimum 1280x200, bottom ~30px covered.*/
+$wallpaper-img: url('/static/background.png'); /* Wallpaper behind the content. */
+$background-primary: #555555; /* The background color of the actual content part. */
+$background-secondary: lighten($background-primary, 5%); /* The secondary color, used for the nav menu background. */
+$background-secondary-acc: lighten($background-primary, 10%); /* The secondary color accent, used for the nav menu buttons. */
+$text-color: #70B0FF; /* The text color, use a good contrast to the background primary and secondary accent. */
+$contentbox-primary: #444444; /* The primary color for the content boxes, that optionally encapsulates blocks of content. */
+
+$enable-text-shadow: 1; /* Enable a wicked sick text glow! */

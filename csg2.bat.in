@@ -1,0 +1,3 @@
+@echo off
+set CSG2_THEMES=@POSTINSTALLPATH@/share/csg2/themes
+py @POSTINSTALLPATH@/lib/csg2/serve.py %*

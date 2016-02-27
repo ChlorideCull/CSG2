@@ -1,0 +1,19 @@
+config.json is a configuration file for the site in question.
+
+It has two keys - 'site' and 'pages'.
+	'site' contains a 'title' which is used as the <title> in every page.
+	
+	'site' contains a 'theme' which is the theme containing master.tpl and master.scss.
+	
+	'site' may contain a 'additional_code' which is a python script executed in the server scope,
+	you can use @route and friends here to specify custom routes and APIs.
+	
+	'pages' is an array depicting the available pages on the site. They are automatically added
+	to the navigation bar. Each page is a hashmap/dict with the following keys:
+		'title' is a string that is used on the navigation bar
+		
+		'path' is the path to the .tpl file, minus the actual file extension. Use a posix style path
+		without a leading slash as it is also used for navigation.
+		
+		finally, 'link_elements' is a list of tuples to be used for additional stylesheets and more.
+		Each tuple is first the type (for example stylesheet) and second is the path (for example /sass/boop.scss)

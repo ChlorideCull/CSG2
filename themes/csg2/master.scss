@@ -1,0 +1,91 @@
+@mixin common-base {
+    
+}
+
+body {
+    box-sizing: border-box;
+    background-image: $wallpaper-img;
+	background-size: cover;
+}
+
+#maincontainer {
+    @include common-base;
+    box-sizing: inherit;
+    width: 1280px;
+    margin-top: 1cm;
+    margin-bottom: 1cm;
+    margin-left: calc(50% - 640px);
+    margin-right: calc(50% - 640px);
+    
+    background-color: $background-primary;
+    color: $text-color;
+    font-family: "Open Sans", sans-serif;
+    @if $enable-text-shadow > 0 {
+        text-shadow: 0 0 2px lighten($text-color, 10%);
+    }
+    box-shadow: 1px 1px 2px darken($background-primary, 10%);
+    
+    #pagecontent {
+        padding: 0.5cm;
+        
+        div.contentbox {
+            margin: 0.25cm;
+            padding: 0.5cm;
+            background-color: $contentbox-primary;
+            
+            p, h1, h2, h3, h4 {
+                margin: 0;
+                margin-bottom: 0.25cm;
+                margin-top: 0.25cm;
+            }
+        }
+    }
+}
+
+a {
+    color: inherit;
+}
+
+header {
+    @include common-base;
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background-image: $header-img;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    nav {
+        @include common-base;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 1cm;
+        background-color: $background-secondary;
+        
+        a {
+            @include common-base;
+            display: inline-block;
+            height: 1cm;
+            line-height: 1cm;
+            padding-left: 0.5cm;
+            padding-right: 0.5cm;
+            margin-right: 2px;
+            margin-left: 2px;
+            
+            text-decoration: none;
+            text-align: center;
+            
+            color: #EEE;
+            text-shadow: none;
+            background-color: $background-secondary-acc;
+            transition: color .5s, text-shadow .5s;
+        }
+        
+        a:hover {
+            color: $text-color;
+            text-shadow: 0 0 2px lighten($text-color, 10%);
+        }
+    }
+}

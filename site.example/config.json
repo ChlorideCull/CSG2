@@ -1,0 +1,13 @@
+{
+    "site": {
+        "title": "CSG2 Example Site",
+		"theme": "csg2"
+    },
+    "pages": [
+        {
+            "title": "Home",
+            "path": "index",
+            "link_elements": []
+        }
+    ]
+}

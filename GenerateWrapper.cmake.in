@@ -1,0 +1,6 @@
+set(POSTINSTALLPATH @REALPATH@)
+if(WIN32)
+	configure_file(csg2.bat.in csg2.bat @ONLY)
+else()
+	configure_file(csg2.in csg2 @ONLY)
+endif()

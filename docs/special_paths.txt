@@ -1,0 +1,9 @@
+CSG2 treats certain paths uniquely.
+	/static/* is served as static files with appropriate cache headers, out of the static/ folder.
+	
+	/rand/* selects a random file from static/ out of a pattern, and returns a 307. For example:
+		/rand/background.png will return one of the files matching the glob static/background.*.png
+		/rand/background.image will return one of the files matching the glob static/background.*.{png,jpg,jpeg,tiff,gif} as .image is treated specially.
+	
+	/sass/* returns a compiled version of the specified SASS stylesheet. Only one case is specially treated, which
+	is /sass/master.tpl - it reads the theme master and prepends the theme settings from scss/theme.scss.

@@ -1,0 +1,3 @@
+CSG2 is *not* something you allow people to upload files to, outside of the static/ folder.
+* .tpl files can contain any python script - see http://bottlepy.org/docs/dev/stpl.html#simpletemplate-syntax
+* misconfiguration can lead to a lot of errors, and possibly open security holes
