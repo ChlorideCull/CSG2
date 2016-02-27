@@ -123,4 +123,4 @@ def catchall(filepath="index"):
         "content": os.path.join(sitepath, filepath + ".tpl")
     }
 
-run(host='localhost', port=8080, debug=True)
+run(host='0.0.0.0', port=8080, debug=False)
