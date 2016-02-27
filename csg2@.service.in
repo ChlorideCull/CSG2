@@ -1,0 +1,8 @@
+[Unit]
+Description=ChlorideSiteGenerator 2 - for site %i
+
+[Service]
+ExecStart=@POSTINSTALLPATH@/usr/bin/csg2 @POSTINSTALLPATH@/var/csg2/%I
+
+[Install]
+WantedBy=multi-user.target

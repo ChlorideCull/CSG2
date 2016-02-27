@@ -14,13 +14,13 @@ The next part depends on if you'll install it with `make install` or a package m
 ###Manual
 Run the following:
 
-    cmake ..
+    cmake -DCMAKE_INSTALL_PREFIX:STRING=/opt/csg2 ..
     make
-    make DESTDIR=/opt/csg2 install
+    make install
 
 ###Packaging
 Assuming `$pkgdir` is the package root, run the following:
 
-    cmake -DREALPATH:STRING=/usr ..
+    cmake -DCMAKE_INSTALL_PREFIX:STRING=/ ..
     make
-    make DESTDIR=${pkgdir}/usr install
+    make DESTDIR=${pkgdir} install
