@@ -5,7 +5,7 @@
 
 # Maintainer: Sebastian Johansson <steamruler@gmail.com>
 pkgname=CSG2-git
-pkgver=2.0-git
+pkgver=2.0
 pkgrel=1
 epoch=
 pkgdesc="Python-based CMS"
@@ -30,13 +30,16 @@ md5sums=('SKIP')
 validpgpkeys=()
 
 build() {
-	cd "$pkgname"
+	cd "CSG2"
 	mkdir build && cd build
 	cmake -DCMAKE_INSTALL_PREFIX:STRING=/usr ..
 	make
 }
 
 package() {
-	cd "$pkgname"
+	cd "CSG2"
+	cd build
 	make DESTDIR="$pkgdir/" install
+	mkdir -p "$pkgdir/srv/csg2"
+	cp -r ../site.example "$pkgdir/srv/csg2/"
 }
