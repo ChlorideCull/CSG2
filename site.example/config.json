@@ -1,7 +1,8 @@
 {
     "site": {
         "title": "CSG2 Example Site",
-		"theme": "csg2"
+		"theme": "csg2",
+        "additional_code": "script.py"
     },
     "pages": [
         {
