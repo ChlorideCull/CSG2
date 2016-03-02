@@ -26,6 +26,7 @@ import importlib
 import sys
 import glob
 import random
+import uuid
 import sandbox
 
 argparser = argparse.ArgumentParser()
@@ -44,12 +45,15 @@ themesroot = os.path.abspath(os.environ["CSG2_THEMES"])
 themepath = os.path.join(themesroot, siteconf["site"]["theme"])
 os.chdir(sitepath)
 
+runningsessions = []
+apiclass = sandbox.csg2api(default_app())
+
 if "additional_code" in siteconf["site"].keys():
     oldpath = sys.path
     sys.path[0] = sitepath
     importlib.invalidate_caches()
     with open(os.path.join(sitepath, siteconf["site"]["additional_code"]), mode="rt") as codefile:
-        sandbox.create_box(codefile.read(), default_app()) # This file is excempt from the linking clauses in the license, allowing it to be non-(A)GPL.
+        sandbox.create_box(codefile.read(), default_app(), apiclass=apiclass) # This file is excempt from the linking clauses in the license, allowing it to be non-(A)GPL.
     sys.path = oldpath
     importlib.invalidate_caches()
 
@@ -89,7 +93,7 @@ def compilethemesass():
     with open(os.path.join(themepath, "master.scss"), mode="rt") as fl:
         output += fl.read()
     return sass.compile(string=output)
-    
+
 @route("/sass/<filename:re:.*\.scss>")
 def compilesass(filename):
     output = ""
@@ -106,7 +110,14 @@ def compilesass(filename):
 @route("/<filepath:path>")
 @view(os.path.join(themepath, "master.tpl"))
 def catchall(filepath="index"):
-    response.set_header("Cache-Control", "max-age=3600")
+    if apiclass.authhook != None:
+        response.set_header("Cache-Control", "no-cache")
+        if (request.get_cookie("csg2sess") not in runningsessions) and (filepath != "login"):
+            response.status = "307 Not Logged In"
+            response.set_header("Location", "/login")
+            return ""
+    else:
+        response.set_header("Cache-Control", "max-age=3600")
     if filepath[-1] == "/":
         filepath = filepath[:-1]
     pageindex = -1
@@ -123,5 +134,23 @@ def catchall(filepath="index"):
         "nav_links": [("/" + k["path"], k["title"],) for k in siteconf["pages"]],
         "content": os.path.join(sitepath, filepath + ".tpl")
     }
+
+@route("/login", method="POST")
+def dologin():
+    if apiclass.authhook == None:
+        response.status = "303 No Need To Log In"
+        response.set_header("Location", "/")
+        return ""
+    if apiclass.authhook(request.forms.user, request.forms.password):
+        uid = uuid.uuid4().hex + uuid.uuid4().hex
+        response.set_cookie("csg2sess", uid)
+        runningsessions.append(uid)
+        response.status = "303 Successfully Logged In"
+        response.set_header("Location", "/")
+        return ""
+    else:
+        response.status = "303 Incorrect Credentials"
+        response.set_header("Location", "/login")
+        return ""
 
 run(host='0.0.0.0', port=8080, debug=False)
