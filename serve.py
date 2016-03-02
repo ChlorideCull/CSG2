@@ -16,7 +16,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-from bottle import route, run, static_file, HTTPResponse, view, response
+from bottle import route, run, static_file, HTTPResponse, view, response, default_app
 import inspect
 import os
 import sass
@@ -26,6 +26,7 @@ import importlib
 import sys
 import glob
 import random
+import sandbox
 
 argparser = argparse.ArgumentParser()
 argparser.add_argument('siteroot', metavar='<site root>', help="site root with config.json")
@@ -48,7 +49,7 @@ if "additional_code" in siteconf["site"].keys():
     sys.path[0] = sitepath
     importlib.invalidate_caches()
     with open(os.path.join(sitepath, siteconf["site"]["additional_code"]), mode="rt") as codefile:
-        exec(codefile.read()) # This file is excempt from the linking clauses in the license, allowing it to be non-(A)GPL.
+        sandbox.create_box(codefile.read(), default_app()) # This file is excempt from the linking clauses in the license, allowing it to be non-(A)GPL.
     sys.path = oldpath
     importlib.invalidate_caches()
 

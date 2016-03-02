@@ -4,7 +4,7 @@ option(ENABLE_SYSTEMD "Generate a systemd service" ON)
 
 set(POSTINSTALLPATH ${CMAKE_INSTALL_PREFIX})
 
-install(FILES serve.py DESTINATION lib/csg2)
+install(FILES serve.py sandbox.py DESTINATION lib/csg2)
 install(DIRECTORY docs DESTINATION share/doc/csg2)
 install(DIRECTORY themes DESTINATION share/csg2)
 install(DIRECTORY site.example DESTINATION share/doc/csg2)
