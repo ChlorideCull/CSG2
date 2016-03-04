@@ -7,8 +7,8 @@ Type=forking
 PIDFile=/var/run/csg2_nginx.pid
 PrivateDevices=yes
 
-ExecStart=/usr/bin/nginx -c @POSTINSTALLPATH@/share/csg2/nginx.conf
-ExecReload=/usr/bin/kill -HUP $MAINPID
+ExecStart=@NGINXBIN@ -c @POSTINSTALLPATH@/share/csg2/nginx.conf
+ExecReload=@KILLBIN@ -HUP $MAINPID
 KillSignal=SIGQUIT
 KillMode=mixed
 
