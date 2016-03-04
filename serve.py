@@ -35,11 +35,11 @@ argparser.add_argument('siteroot', metavar='<site name>', help="site name/the fo
 parsedargs = argparser.parse_args()
 
 if "CSG2_THEMES" not in os.environ:
-	print("/!\\ CSG2_THEMES is not defined. Please launch through the wrapper script.", file=sys.stderr)
-	exit(1)
+    print("/!\\ CSG2_THEMES is not defined. Please launch through the wrapper script.", file=sys.stderr)
+    exit(1)
 if "CSG2_SITECONF" not in os.environ:
     print("/!\\ CSG2_SITECONF is not defined. Please launch through the wrapper script.", file=sys.stderr)
-	exit(1)
+    exit(1)
 
 sitepath = os.path.abspath(os.path.join(parsedargs.sitesfolder, parsedargs.siteroot))
 siteconffile = open(os.path.join(sitepath, "config.json"), mode="rt", encoding="utf-8")
