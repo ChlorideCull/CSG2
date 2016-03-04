@@ -1,5 +1,6 @@
 worker_processes auto;
 pid /var/run/csg2_nginx.pid;
+user nobody;
 
 events {
     worker_connections 768;
@@ -25,4 +26,12 @@ http {
     gzip off;
 
     include /tmp/*.csg2nginx;
+    
+    server {
+        listen 8080 default_server;
+	    listen [::]:8080 default_server;
+        location / {
+            root @POSTINSTALLPATH@/share/csg2/nginx-default;
+        }
+    }
 }

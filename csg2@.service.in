@@ -4,6 +4,7 @@ Requires=csg2-nginx.service
 After=csg2-nginx.service
 
 [Service]
+User=nobody
 ExecStart=@POSTINSTALLPATH@/bin/csg2 /srv/csg2/ %I
 StandardOutput=journal
 StandardError=journal
