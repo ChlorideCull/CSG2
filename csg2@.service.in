@@ -1,5 +1,7 @@
 [Unit]
 Description=ChlorideSiteGenerator 2 - for site %i
+Requires=csg2-nginx.service
+After=csg2-nginx.service
 
 [Service]
 ExecStart=@POSTINSTALLPATH@/bin/csg2 /srv/csg2/ %I

@@ -1,0 +1,16 @@
+[Unit]
+Description=ChlorideSiteGenerator 2 - Nginx powered frontend
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/csg2_nginx.pid
+PrivateDevices=yes
+
+ExecStart=/usr/bin/nginx -c @POSTINSTALLPATH@/share/csg2/nginx.conf
+ExecReload=/usr/bin/kill -HUP $MAINPID
+KillSignal=SIGQUIT
+KillMode=mixed
+
+[Install]
+WantedBy=multi-user.target

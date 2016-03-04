@@ -37,6 +37,9 @@ parsedargs = argparser.parse_args()
 if "CSG2_THEMES" not in os.environ:
 	print("/!\\ CSG2_THEMES is not defined. Please launch through the wrapper script.", file=sys.stderr)
 	exit(1)
+if "CSG2_SITECONF" not in os.environ:
+    print("/!\\ CSG2_SITECONF is not defined. Please launch through the wrapper script.", file=sys.stderr)
+	exit(1)
 
 sitepath = os.path.abspath(os.path.join(parsedargs.sitesfolder, parsedargs.siteroot))
 siteconffile = open(os.path.join(sitepath, "config.json"), mode="rt", encoding="utf-8")
@@ -50,7 +53,7 @@ os.chdir(sitepath)
 runningsessions = []
 apiclass = sandbox.csg2api(default_app())
 
-if "additional_code" in siteconf["site"].keys():
+if "additional_code" in siteconf["site"]:
     oldpath = sys.path
     sys.path[0] = sitepath
     importlib.invalidate_caches()
@@ -58,6 +61,9 @@ if "additional_code" in siteconf["site"].keys():
         sandbox.create_box(codefile.read(), default_app(), apiclass=apiclass) # This file is excempt from the linking clauses in the license, allowing it to be non-(A)GPL.
     sys.path = oldpath
     importlib.invalidate_caches()
+
+if "domain_name" not in siteconf["site"]:
+    siteconf["site"]["domain_name"] = parsedargs.siteroot.replace("/", "_")
 
 @route("/rand/<filepath:path>")
 def getrandstaticredirect(filepath):
@@ -156,6 +162,12 @@ def dologin():
         return ""
 
 from waitress import serve as waitress_serve
-socketpath = "/var/run/csg2_{}.sock".format(parsedargs.siteroot.replace("/", "_"))
-print("-> Serving up site on '{}'".format(socketpath))
+socketpath = "/var/run/csg2_{}.sock".format(siteconf["site"]["domain_name"].replace(".", "_"))
+print("-> Generating config.")
+with open(os.path.abspath(os.environ["CSG2_SITECONF"]), mode="rt", encoding="utf-8") as sitetemplate:
+    sitetemplatetxt = sitetemplate.read()
+    newsite = sitetemplatetxt.replace("%%SERVERNAME%%", siteconf["site"]["domain_name"]).replace("%%SOCKETPATH%%", socketpath)
+    with open("/tmp/{}.csg2nginx".format(siteconf["site"]["domain_name"].replace(".", "_")), mode="wt", encoding="utf-8") as newconf:
+        newconf.write(newsite)
+print("-> Serving up site on '{}'.".format(socketpath))
 waitress_serve(bottle.default_app(), unix_socket=socketpath)
