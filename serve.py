@@ -162,7 +162,7 @@ def dologin():
         return ""
 
 from waitress import serve as waitress_serve
-socketpath = "/var/run/csg2_{}.sock".format(siteconf["site"]["domain_name"].replace(".", "_"))
+socketpath = "/tmp/csg2_{}.sock".format(siteconf["site"]["domain_name"].replace(".", "_"))
 print("-> Generating config.")
 with open(os.path.abspath(os.environ["CSG2_SITECONF"]), mode="rt", encoding="utf-8") as sitetemplate:
     sitetemplatetxt = sitetemplate.read()
