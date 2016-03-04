@@ -162,7 +162,7 @@ def dologin():
         return ""
 
 import logging
-logging.basicConfig(filename='/var/log/csg2/{}.log'.format(siteconf["site"]["domain_name"].replace(".", "_"), filemode='wt+', level=logging.INFO)
+logging.basicConfig(filename='/var/log/csg2/{}.log'.format(siteconf["site"]["domain_name"].replace(".", "_")), filemode='wt+', level=logging.INFO)
 
 from waitress import serve as waitress_serve
 socketpath = "/tmp/csg2_{}.sock".format(siteconf["site"]["domain_name"].replace(".", "_"))
