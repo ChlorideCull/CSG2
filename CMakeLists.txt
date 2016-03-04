@@ -23,8 +23,8 @@ else()
     install(PROGRAMS ${CMAKE_BINARY_DIR}/csg2 DESTINATION bin)
 endif()
 if(ENABLE_SYSTEMD)
-    execute_process(COMMAND which nginx OUTPUT_VARIABLE NGINXBIN) # Thanks, Ubuntu, for putting nginx in /usr/sbin, because it's clearly the best option.
-    execute_process(COMMAND which kill OUTPUT_VARIABLE KILLBIN)   # Yet, you place kill in /bin.
+    execute_process(COMMAND which nginx OUTPUT_VARIABLE NGINXBIN OUTPUT_STRIP_TRAILING_WHITESPACE) # Thanks, Ubuntu, for putting nginx in /usr/sbin, because it's clearly the best option.
+    execute_process(COMMAND which kill OUTPUT_VARIABLE KILLBIN OUTPUT_STRIP_TRAILING_WHITESPACE)   # Yet, you place kill in /bin.
     configure_file(csg2@.service.in csg2@.service @ONLY)
     configure_file(csg2-nginx.service.in csg2-nginx.service @ONLY)
     install(FILES ${CMAKE_BINARY_DIR}/csg2@.service ${CMAKE_BINARY_DIR}/csg2-nginx.service DESTINATION lib/systemd/system)
