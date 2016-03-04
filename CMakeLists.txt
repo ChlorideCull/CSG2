@@ -1,10 +1,16 @@
 cmake_minimum_required(VERSION 3.0)
 project(CSG2 NONE)
 option(ENABLE_SYSTEMD "Generate a systemd service" ON)
+option(NO_LIBEXEC "Place internal binaries in lib/csg2/ instead of libexec/" ON)
 
 set(POSTINSTALLPATH ${CMAKE_INSTALL_PREFIX})
+if(NO_LIBEXEC)
+	set(LIBEXECPATH "lib/csg2")
+else()
+	set(LIBEXECPATH "libexec/csg2")
+endif()
 
-install(FILES serve.py sandbox.py DESTINATION lib/csg2)
+install(FILES serve.py sandbox.py DESTINATION ${LIBEXECPATH})
 install(DIRECTORY docs DESTINATION share/doc/csg2)
 install(DIRECTORY themes DESTINATION share/csg2)
 install(DIRECTORY site.example DESTINATION share/doc/csg2)
