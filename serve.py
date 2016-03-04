@@ -161,10 +161,6 @@ def dologin():
         response.set_header("Location", "/login")
         return ""
 
-import logging
-logging.basicConfig(filename='/var/log/csg2/{}.log'.format(siteconf["site"]["domain_name"].replace(".", "_")), filemode='wt+', level=logging.DEBUG)
-logging.getLogger('waitress').propagate = True
-
 from waitress import serve as waitress_serve
 socketpath = "/tmp/csg2_{}.sock".format(siteconf["site"]["domain_name"].replace(".", "_"))
 print("-> Generating config.")
