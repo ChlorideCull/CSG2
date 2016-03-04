@@ -170,4 +170,4 @@ with open(os.path.abspath(os.environ["CSG2_SITECONF"]), mode="rt", encoding="utf
     with open("/tmp/{}.csg2nginx".format(siteconf["site"]["domain_name"].replace(".", "_")), mode="wt", encoding="utf-8") as newconf:
         newconf.write(newsite)
 print("-> Serving up site on '{}'.".format(socketpath))
-waitress_serve(bottle.default_app(), unix_socket=socketpath)
+waitress_serve(default_app(), unix_socket=socketpath)
