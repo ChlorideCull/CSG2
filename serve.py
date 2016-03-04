@@ -16,7 +16,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-from bottle import route, run, static_file, HTTPResponse, view, response, default_app
+from bottle import route, run, static_file, HTTPResponse, view, request, response, default_app
 import inspect
 import os
 import sass
@@ -162,7 +162,8 @@ def dologin():
         return ""
 
 import logging
-logging.basicConfig(filename='/var/log/csg2/{}.log'.format(siteconf["site"]["domain_name"].replace(".", "_")), filemode='wt+', level=logging.INFO)
+logging.basicConfig(filename='/var/log/csg2/{}.log'.format(siteconf["site"]["domain_name"].replace(".", "_")), filemode='wt+', level=logging.DEBUG)
+logging.getLogger('waitress').propagate = True
 
 from waitress import serve as waitress_serve
 socketpath = "/tmp/csg2_{}.sock".format(siteconf["site"]["domain_name"].replace(".", "_"))
