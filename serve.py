@@ -30,13 +30,15 @@ import uuid
 import sandbox
 
 argparser = argparse.ArgumentParser()
-argparser.add_argument('siteroot', metavar='<site root>', help="site root with config.json")
+argparser.add_argument('sitesfolder', metavar='<site storage folder>', help="path to the folder containing sites")
+argparser.add_argument('siteroot', metavar='<site name>', help="site name/the folder with config.json")
+parsedargs = argparser.parse_args()
 
 if "CSG2_THEMES" not in os.environ:
 	print("/!\\ CSG2_THEMES is not defined. Please launch through the wrapper script.", file=sys.stderr)
 	exit(1)
 
-sitepath = os.path.abspath(argparser.parse_args().siteroot)
+sitepath = os.path.abspath(os.path.join(parsedargs.sitesfolder, parsedargs.siteroot))
 siteconffile = open(os.path.join(sitepath, "config.json"), mode="rt", encoding="utf-8")
 siteconf = json.load(siteconffile)
 siteconffile.close()
@@ -153,4 +155,7 @@ def dologin():
         response.set_header("Location", "/login")
         return ""
 
-run(host='0.0.0.0', port=8080, debug=False)
+from waitress import serve as waitress_serve
+socketpath = "/var/run/csg2_{}.sock".format(parsedargs.siteroot.replace("/", "_"))
+print("-> Serving up site on '{}'".format(socketpath))
+waitress_serve(bottle.default_app(), unix_socket=socketpath)

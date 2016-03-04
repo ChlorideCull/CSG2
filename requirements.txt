@@ -1,3 +1,4 @@
 bottle>=0.12.0,<0.13.0
 libsass==0.10.1
 six
+waitress==0.8.10

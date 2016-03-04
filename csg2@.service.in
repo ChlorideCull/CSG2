@@ -2,7 +2,7 @@
 Description=ChlorideSiteGenerator 2 - for site %i
 
 [Service]
-ExecStart=@POSTINSTALLPATH@/bin/csg2 /srv/csg2/%I
+ExecStart=@POSTINSTALLPATH@/bin/csg2 /srv/csg2/ %I
 StandardOutput=journal
 StandardError=journal
 
