@@ -1,0 +1,50 @@
+* {
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+}
+
+body {
+    background-color: $background-primary;
+    width: 100vw;
+    overflow-x: hidden;
+    min-height: 100vh;
+    color: $text-color;
+    font-family: sans-serif;
+}
+
+header {
+    padding: 6px;
+    padding-left: 12px;
+    padding-right: 12px;
+    
+    h1 {
+        display: inline-block;
+        font-family: bebas, sans-serif;
+        font-size: 64px;
+        
+        a {
+            color: $page-link-color;
+            text-decoration: none;
+            transition: color linear .25s;
+        }
+
+        a:hover {
+            color: $page-link-color-hover;
+        }
+    }
+    
+    .title {
+        float: left;
+    }
+    
+    .swap-view {
+        float: right;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    
+    .clear {
+        clear: both;
+    }
+}

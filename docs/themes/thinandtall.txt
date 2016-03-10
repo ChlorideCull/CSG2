@@ -1,0 +1,17 @@
+The following options are configurable in theme.scss:
+
+    $page-link-color
+        Type: color
+        Color to use for links in the nav bar.
+        
+    $page-link-color-hover
+        Type: color
+        Color to use for links in the nav bar when hovered over.
+        
+    $background-primary
+        Type: color
+        Color to use for the background.
+        
+    $text-color
+        Type: color
+        Color to use for text
