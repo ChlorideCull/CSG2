@@ -58,7 +58,8 @@ class CSG2Server:
         # This is functionally equivalent of what the language does, but makes sure Bottle will call the right instance.
         self.getrandstaticredirect = self.wsgiapp.route("/rand/<filepath:path>")(self.getrandstaticredirect)
         self.getstatic = self.wsgiapp.route("/static/<filepath:path>")(self.getstatic)
-        self.compilethemesass = self.wsgiapp.route("/sass/master.scss")(self.compilethemesass)
+        self.compilethemesass = self.wsgiapp.route("/theme/sass/master.scss")(self.compilethemesass)
+        self.getthemeasset = self.wsgiapp.route("/theme/static/<filepath:path>")(self.getthemeasset)
         self.compilesass = self.wsgiapp.route("/sass/<filename:re:.*\.scss>")(self.compilesass)
         self.catchall = self.wsgiapp.route("/")(
             self.wsgiapp.route("/<filepath:path>")(
@@ -119,7 +120,7 @@ class CSG2Server:
         response.set_header("Cache-Control", "max-age=3600")
         return static_file(filepath, root=os.path.join(self.sitepath, "static/"))
 
-    # Route: "/sass/master.scss"
+    # Route: "/theme/sass/master.scss"
     def compilethemesass(self):
         output = ""
         response.set_header("Cache-Control", "max-age=3600")
@@ -129,6 +130,11 @@ class CSG2Server:
         with open(os.path.join(self.themepath, "master.scss"), mode="rt") as fl:
             output += fl.read()
         return sass.compile(string=output)
+    
+    # Route: "/theme/static/<filepath:path>"
+    def getthemeasset(self, filepath):
+        response.set_header("Cache-Control", "max-age=3600")
+        return static_file(filepath, root=os.path.join(self.themepath, "assets/"))
 
     # Route: "/sass/<filename:re:.*\.scss>"
     def compilesass(self, filename):

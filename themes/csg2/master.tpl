@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>{{title or 'No title set, fix!'}}</title>
-        <link rel="stylesheet" href="/sass/master.scss">
+        <link rel="stylesheet" href="/theme/sass/master.scss">
         % for lnk in link_elements:
         <link rel="{{lnk[0]}}" href="{{lnk[1]}}">
         % end
