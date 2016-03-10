@@ -11,6 +11,10 @@ body {
     min-height: 100vh;
     color: $text-color;
     font-family: sans-serif;
+    
+    div.contentbox {
+        margin: 12px;
+    }
 }
 
 header {
