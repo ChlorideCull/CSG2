@@ -1,0 +1,33 @@
+The following options are configurable in theme.scss:
+
+    $header-img
+        Type: image url 
+        An image to use as a header, Minimum 1280x200, bottom ~30px covered.
+    
+    $wallpaper-img
+        Type: image url
+        An image used as Wallpaper behind the content.
+    
+    $background-primary
+        Type: color
+        The background color of the actual content part of the page.
+    
+    $background-secondary
+        Type: color
+        The secondary background color, used for the nav menu background.
+
+    $background-secondary-acc
+        Type: color
+        The secondary background color accent, used for the nav menu buttons.
+    
+    $text-color
+        Type: color
+        The text color, use a good contrast to the background primary and secondary accent.
+
+    $contentbox-primary
+        Type: color
+        The primary color for the content boxes, that optionally encapsulates blocks of content.
+
+    $enable-text-shadow
+        Type: bool (0/1)
+        Enable a wicked sick text glow!
