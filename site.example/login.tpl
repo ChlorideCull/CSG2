@@ -5,8 +5,8 @@
 </div>
 <div class="contentbox">
 	<form action="/login" method="post">
-        <input type="text" text="user" placeholder="Username" />
-        <input type="password" text="password" placeholder="Password" />
-        <input type="submit">Submit</input>
+        <input type="text" name="user" placeholder="Username"></input>
+        <input type="password" name="password" placeholder="Password"></input>
+        <input type="submit" value="Submit"></input>
     </form>
 </div>

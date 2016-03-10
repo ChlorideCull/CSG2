@@ -51,7 +51,7 @@ class CSG2Server:
         
         # Setup theming
         themesroot = os.path.abspath(themedir)
-        self.themepath = os.path.join(themesroot, siteconf["site"]["theme"])
+        self.themepath = os.path.join(themesroot, self.siteconf["site"]["theme"])
         os.chdir(self.sitepath)
         
         # Assign routes (done before the site code to allow overrides)
@@ -69,7 +69,7 @@ class CSG2Server:
         self.dologin = self.wsgiapp.route("/login", method="POST")(self.dologin)
         
         # If they have code, run it
-        if "additional_code" in siteconf["site"]:
+        if "additional_code" in self.siteconf["site"]:
             oldpath = sys.path
             sys.path[0] = self.sitepath
             importlib.invalidate_caches()
@@ -82,7 +82,7 @@ class CSG2Server:
         if "domain_name" not in self.siteconf["site"]:
             self.siteconf["site"]["domain_name"] = self.parsedargs.siteroot.replace("/", "_")
         
-        socketpath = "/tmp/csg2_{}.sock".format(siteconf["site"]["domain_name"].replace(".", "_"))
+        socketpath = "/tmp/csg2_{}.sock".format(self.siteconf["site"]["domain_name"].replace(".", "_"))
         print("-> Generating config.")
         with open(os.path.abspath(siteconftemplate), mode="rt", encoding="utf-8") as sitetemplate:
             sitetemplatetxt = sitetemplate.read()
@@ -95,7 +95,7 @@ class CSG2Server:
         waitress_serve(self.wsgiapp, unix_socket=socketpath)
 
     # Route: "/rand/<filepath:path>"
-    def getrandstaticredirect(self.filepath):
+    def getrandstaticredirect(self, filepath):
         extmap = {
             "image": ["png", "jpg", "jpeg", "gif"] # Using "image" as extention allows matching with all image types
         }

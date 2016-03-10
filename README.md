@@ -24,3 +24,6 @@ Assuming `$pkgdir` is the package root, run the following:
     cmake -DCMAKE_INSTALL_PREFIX:STRING=/usr ..
     make
     make DESTDIR=${pkgdir} install
+
+##Post install
+CSG2 runs as nobody:nogroup by default, and pulls sites from `/srv/csg2/`. Make sure it is readable. The nginx frontend requires `/var/log/csg2/` to exist.
