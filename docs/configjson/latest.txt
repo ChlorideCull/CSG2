@@ -1,0 +1,38 @@
+config.json is a configuration file for the site in question.
+
+It has three keys - 'version', 'site' and 'pages'.
+	'version' is a number specifying configuration file version, this document
+	details version 2.
+	
+	'site' is a dictionary containing the following keys:
+		'title' which is used as the <title> in every page.
+	
+		'theme' which is the theme containing master.tpl and master.scss.
+
+		'domain_name' which is a string that configures the nginx frontend to
+		route that domain name to the correct site. If not present, it defaults
+		to the site name, with slashes substituted for underscores.
+		
+		may contain a 'additional_code' which is a python script executed in
+		the server scope, you can use csg2api.route and others here to specify
+		custom routes and APIs.
+	
+	'pages' is an array depicting the available pages on the site. They are
+	automatically added to the navigation bar. Each page is a hashmap/dict with
+	the following keys:
+		'title' is a string that is used on the navigation bar
+		
+		'path' is the path to the .tpl file, minus the actual file extension.
+		Use a posix style path without a leading slash as it is also used for
+		navigation.
+		
+		'hidden' is a boolean that specifies whether to print the page onto the
+		navigation bar or not.
+		
+		'require_auth' is a boolean that specifies whether authentication is
+		required to access the page, note that the page will error out if there
+		is no authentication handler for security reasons.
+		
+		finally, 'link_elements' is a list of tuples to be used for additional
+		stylesheets and more. Each tuple is first the type (for example
+		stylesheet) and second is the path (for example /sass/boop.scss)
