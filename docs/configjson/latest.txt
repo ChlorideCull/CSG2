@@ -10,8 +10,7 @@ It has three keys - 'version', 'site' and 'pages'.
 		'theme' which is the theme containing master.tpl and master.scss.
 
 		'domain_name' which is a string that configures the nginx frontend to
-		route that domain name to the correct site. If not present, it defaults
-		to the site name, with slashes substituted for underscores.
+		route that domain name to the correct site.
 		
 		may contain a 'additional_code' which is a python script executed in
 		the server scope, you can use csg2api.route and others here to specify
