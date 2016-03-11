@@ -114,13 +114,13 @@ class CSG2Server:
 
     # Route: "/static/<filepath:path>"
     def getstatic(self, filepath):
-        response.set_header("Cache-Control", "max-age=3600")
+        response.set_header("Cache-Control", "max-age=300")
         return static_file(filepath, root=os.path.join(self.sitepath, "static/"))
 
     # Route: "/theme/sass/master.scss"
     def compilethemesass(self):
         output = ""
-        response.set_header("Cache-Control", "max-age=3600")
+        response.set_header("Cache-Control", "max-age=300")
         response.content_type = "text/css"
         with open(os.path.join(self.sitepath, "scss/theme.scss"), mode="rt") as fl:
             output += fl.read()
@@ -130,13 +130,13 @@ class CSG2Server:
     
     # Route: "/theme/static/<filepath:path>"
     def getthemeasset(self, filepath):
-        response.set_header("Cache-Control", "max-age=3600")
+        response.set_header("Cache-Control", "max-age=300")
         return static_file(filepath, root=os.path.join(self.themepath, "assets/"))
 
     # Route: "/sass/<filename:re:.*\.scss>"
     def compilesass(self, filename):
         output = ""
-        response.set_header("Cache-Control", "max-age=3600")
+        response.set_header("Cache-Control", "max-age=300")
         response.content_type = "text/css"
         if not os.path.exists(os.path.join(self.sitepath, "scss/" + filename)):
             response.status = 404
