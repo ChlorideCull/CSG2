@@ -35,7 +35,7 @@ class CSG2Server:
     
     def __init__(self, themedir, siteconftemplate):
         self.wsgiapp = Bottle()
-        self.apiclass = sandbox.csg2api(self.wsgiapp, runningsessions)
+        self.apiclass = sandbox.csg2api(self.wsgiapp, self.runningsessions)
         
         # Parse arguments
         argparser = argparse.ArgumentParser()
