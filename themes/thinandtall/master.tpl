@@ -11,10 +11,12 @@
     </head>
     <body>
         <header>
-            <h1 class="title"><a>{{title or 'No title set, fix!'}}</a></h1>
-            % for pge in nav_links:
-            <h1 class="swap-view"><a href="{{pge[0]}}">{{pge[1]}}</a></h1>
-            % end
+            <h1 class="title">{{title or 'No title set, fix!'}}</h1>
+            <nav>
+                % for pge in nav_links:
+                <h1><a href="{{pge[0]}}">{{pge[1]}}</a></h1>
+                % end
+            </nav>
             <div class="clear"></div>
         </header>
         <div id="pagecontent">
