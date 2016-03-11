@@ -49,6 +49,12 @@ class CSG2Server:
         self.siteconf = json.load(siteconffile)
         siteconffile.close()
         
+        # Validate config
+        if "domain_name" not in self.siteconf["site"]:
+            self.siteconf["site"]["domain_name"] = self.parsedargs.siteroot.replace("/", "_")
+        if ("version" not in self.siteconf) or (self.siteconf["version"] != 1):
+            print("/!\\ Either no version declaration was found in config.json, or the version is unsupported (only 1 for now).", file=sys.stderr)
+        
         # Setup theming
         themesroot = os.path.abspath(themedir)
         self.themepath = os.path.join(themesroot, self.siteconf["site"]["theme"])
@@ -79,9 +85,6 @@ class CSG2Server:
             importlib.invalidate_caches()
 
         # Configure Nginx
-        if "domain_name" not in self.siteconf["site"]:
-            self.siteconf["site"]["domain_name"] = self.parsedargs.siteroot.replace("/", "_")
-        
         socketpath = "/tmp/csg2_{}.sock".format(self.siteconf["site"]["domain_name"].replace(".", "_"))
         print("-> Generating config.")
         with open(os.path.abspath(siteconftemplate), mode="rt", encoding="utf-8") as sitetemplate:
