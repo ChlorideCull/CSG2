@@ -1,0 +1,21 @@
+body {
+	font-family: RemingtonNoiseless;
+	font-size: 25px;
+	background-color: #222;
+}
+
+#page {
+	width: 800px;
+	height: 1041px;
+	padding: 0;
+	border: 1px solid #FBFBFB;
+	
+	background: linear-gradient(to bottom, #FBFBFB 0, #FBFBFB 24px, #FBFBFB 24px, #1E5799 26px, #1E5799 26px);
+	background-size: 1px 26px;
+	
+	box-shadow: 0 0 3px 3px rgba(0, 0, 0, 0.8);
+}
+
+#page > p {
+	margin: 1em;
+}
