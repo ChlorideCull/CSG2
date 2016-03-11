@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 #
 #    ChlorideSiteGenerator 2
 #    Copyright (C) 2016 Sebastian "Chloride Cull" Johansson
@@ -29,6 +28,7 @@ import glob
 import random
 import uuid
 import sandbox
+import configman
 
 class CSG2Server:
     runningsessions = []
@@ -46,14 +46,8 @@ class CSG2Server:
         # Setup configuration and path to site
         self.sitepath = os.path.abspath(os.path.join(self.parsedargs.sitesfolder, self.parsedargs.siteroot))
         siteconffile = open(os.path.join(self.sitepath, "config.json"), mode="rt", encoding="utf-8")
-        self.siteconf = json.load(siteconffile)
+        self.siteconf = configman.normalize_config(json.load(siteconffile))
         siteconffile.close()
-        
-        # Validate config
-        if "domain_name" not in self.siteconf["site"]:
-            self.siteconf["site"]["domain_name"] = self.parsedargs.siteroot.replace("/", "_")
-        if ("version" not in self.siteconf) or (self.siteconf["version"] != 1):
-            print("/!\\ Either no version declaration was found in config.json, or the version is unsupported (only 1 for now).", file=sys.stderr)
         
         # Setup theming
         themesroot = os.path.abspath(themedir)
