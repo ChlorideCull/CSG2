@@ -46,7 +46,7 @@ class CSG2Server:
         # Setup configuration and path to site
         self.sitepath = os.path.abspath(os.path.join(self.parsedargs.sitesfolder, self.parsedargs.siteroot))
         siteconffile = open(os.path.join(self.sitepath, "config.json"), mode="rt", encoding="utf-8")
-        self.siteconf = configman.normalize_config(json.load(siteconffile))
+        self.siteconf = configman.normalize_config(json.load(siteconffile), self.parsedargs.siteroot)
         siteconffile.close()
         
         # Setup theming

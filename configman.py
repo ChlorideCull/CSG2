@@ -1,6 +1,6 @@
 defined_versions = [1, 2]
 
-def normalize_config(conf, siteroot, themeroot):
+def normalize_config(conf, siteroot):
     if "version" not in conf:
         print("Error: Version not defined in config!")
         exit(101)
