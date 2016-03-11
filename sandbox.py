@@ -1,12 +1,16 @@
 import copy
+from bottle import request
 
 class csg2api:
-    def __init__(self, bottleapp):
+    def __init__(self, bottleapp, sessionlist):
         self.app = bottleapp
         self.authhook = None
         self.agpl = False # If True, allow deeper integration
+        self.sessions = sessionlist
     def route(self, *args, **kwargs):
         return self.app.route(*args, **kwargs)
+    def get_username_of_request(self):
+        return self.sessions[request.get_cookie("csg2sess")]
     def auth(self, func):
         self.authhook = func
 

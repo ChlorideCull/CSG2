@@ -31,11 +31,11 @@ import sandbox
 import configman
 
 class CSG2Server:
-    runningsessions = []
+    runningsessions = {}
     
     def __init__(self, themedir, siteconftemplate):
         self.wsgiapp = Bottle()
-        self.apiclass = sandbox.csg2api(self.wsgiapp)
+        self.apiclass = sandbox.csg2api(self.wsgiapp, runningsessions)
         
         # Parse arguments
         argparser = argparse.ArgumentParser()
@@ -184,7 +184,7 @@ class CSG2Server:
         if self.apiclass.authhook(request.forms.user, request.forms.password):
             uid = uuid.uuid4().hex + uuid.uuid4().hex
             response.set_cookie("csg2sess", uid)
-            self.runningsessions.append(uid)
+            self.runningsessions[uid] = request.forms.user
             response.status = "303 Successfully Logged In"
             response.set_header("Location", "/")
             return ""
