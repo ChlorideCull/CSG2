@@ -1,7 +1,7 @@
 config.json is a configuration file for the site in question.
 
 It has three keys - 'version', 'site' and 'pages'.
-	'version' is a number specifying configuration file version, this documents detail version 1.
+	'version' is a number specifying configuration file version, this document details version 1.
 	
 	'site' is a dictionary containing the following keys:
 		'title' which is used as the <title> in every page.
@@ -9,7 +9,7 @@ It has three keys - 'version', 'site' and 'pages'.
 		'theme' which is the theme containing master.tpl and master.scss.
 	
 		may contain a 'additional_code' which is a python script executed in the server scope,
-		you can use @route and friends here to specify custom routes and APIs.
+		you can use csg2api.route and other members here to specify custom routes and APIs.
 	
 		may contain a 'domain_name' which is a string that configures the nginx frontend to route
 		that domain name to the correct site. If not present, it defaults to the site name, with slashes
