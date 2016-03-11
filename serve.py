@@ -148,14 +148,6 @@ class CSG2Server:
     # Route: "/"
     # Route: "/<filepath:path>"
     def catchall(self, filepath="index"):
-        if self.apiclass.authhook != None:
-            response.set_header("Cache-Control", "no-cache")
-            if (request.get_cookie("csg2sess") not in self.runningsessions) and (filepath != "login"):
-                response.status = "307 Not Logged In"
-                response.set_header("Location", "/login")
-                return ""
-        else:
-            response.set_header("Cache-Control", "max-age=3600")
         if filepath[-1] == "/":
             filepath = filepath[:-1]
         pageindex = -1
@@ -166,6 +158,16 @@ class CSG2Server:
         if not os.path.exists(os.path.join(self.sitepath, filepath + ".tpl")):
             response.status = 404
             return "Page not found :C"
+        
+        if self.apiclass.authhook != None:
+            response.set_header("Cache-Control", "no-cache")
+            if (self.siteconf["pages"][i]["require_auth"]) and (request.get_cookie("csg2sess") not in self.runningsessions) and (filepath != "login"):
+                response.status = "307 Not Logged In"
+                response.set_header("Location", "/login")
+                return ""
+        else:
+            response.set_header("Cache-Control", "max-age=300")
+        
         return {
             "title": self.siteconf["site"]["title"],
             "link_elements": self.siteconf["pages"][pageindex]["link_elements"],
