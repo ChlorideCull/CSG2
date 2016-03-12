@@ -161,7 +161,7 @@ class CSG2Server:
         
         if self.apiclass.authhook != None:
             response.set_header("Cache-Control", "no-cache")
-            if (self.siteconf["pages"][i]["require_auth"]) and (request.get_cookie("csg2sess") not in self.runningsessions) and (filepath != "login"):
+            if (self.siteconf["pages"][pageindex]["require_auth"]) and (request.get_cookie("csg2sess") not in self.runningsessions) and (filepath != "login"):
                 response.status = "307 Not Logged In"
                 response.set_header("Location", "/login")
                 return ""
