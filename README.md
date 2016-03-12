@@ -1,5 +1,5 @@
 #Chloride Site Generator 2
-The spiritual successor to the original abdomination.
+The spiritual successor to the original abomination.
 
 ##Building
 CSG2 depends on a few Python libraries, and runs on Python 3.
