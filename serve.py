@@ -34,6 +34,7 @@ class CSG2Server:
     runningsessions = {}
     
     def __init__(self, themedir, siteconftemplate):
+        self.installdir = sys.path[0] # Note: this should ideally be gotten from somewhere else.
         self.wsgiapp = Bottle()
         self.apiclass = sandbox.csg2api(self.wsgiapp, self.runningsessions)
         
@@ -155,9 +156,12 @@ class CSG2Server:
             if self.siteconf["pages"][i]["path"] == filepath:
                 pageindex = i
                 break
-        if not os.path.exists(os.path.join(self.sitepath, filepath + ".tpl")):
-            response.status = 404
-            return "Page not found :C"
+        templatepath = os.path.join(self.sitepath, filepath + ".tpl")
+        if not os.path.exists(templatepath):
+            templatepath = os.path.join(self.installdir, "default-files/", filepath + ".tpl")
+            if not os.path.exists(templatepath):
+                response.status = 404
+                return "Page not found :C"
         
         if self.apiclass.authhook != None:
             response.set_header("Cache-Control", "no-cache")
