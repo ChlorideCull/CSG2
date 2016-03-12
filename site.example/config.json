@@ -3,7 +3,8 @@
     "site": {
         "title": "CSG2 Example Site",
         "theme": "csg2",
-        "additional_code": "script.py"
+        "additional_code": "script.py",
+        "domain_name": "site.example"
     },
     "pages": [
         {
