@@ -1,5 +1,5 @@
 {
-    "version": 1,
+    "version": 2,
     "site": {
         "title": "CSG2 Example Site",
         "theme": "csg2",
@@ -9,7 +9,16 @@
         {
             "title": "Home",
             "path": "index",
-            "link_elements": []
+            "link_elements": [],
+            "require_auth": false,
+            "hidden": false
+        },
+        {
+            "title": "Secret Stats",
+            "path": "secret",
+            "link_elements": [],
+            "require_auth": true,
+            "hidden": false
         }
     ]
 }
