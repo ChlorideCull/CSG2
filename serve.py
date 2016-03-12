@@ -172,7 +172,8 @@ class CSG2Server:
             "title": self.siteconf["site"]["title"],
             "link_elements": self.siteconf["pages"][pageindex]["link_elements"],
             "nav_links": [("/" + k["path"], k["title"],) for k in self.siteconf["pages"]],
-            "content": os.path.join(self.sitepath, filepath + ".tpl")
+            "content": os.path.join(self.sitepath, filepath + ".tpl"),
+            "csg2api": self.apiclass
         }
 
     #Route: "/login", method="POST"
