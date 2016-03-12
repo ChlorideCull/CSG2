@@ -171,7 +171,7 @@ class CSG2Server:
         return {
             "title": self.siteconf["site"]["title"],
             "link_elements": self.siteconf["pages"][pageindex]["link_elements"],
-            "nav_links": [("/" + k["path"], k["title"],) for k in self.siteconf["pages"]],
+            "nav_links": [("/" + k["path"], k["title"],) for k in self.siteconf["pages"] if !k["hidden"]],
             "content": os.path.join(self.sitepath, filepath + ".tpl"),
             "csg2api": self.apiclass
         }
