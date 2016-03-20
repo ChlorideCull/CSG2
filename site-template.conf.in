@@ -2,6 +2,9 @@ server {
 	listen 8080;
 	listen [::]:8080;
 	server_name %%SERVERNAME%%;
+    location @errpages {
+        root @POSTINSTALLPATH@/share/csg2/nginx-default;
+    }
     error_page 504 @errpages/timeout.html;
 	location / {
 		proxy_pass http://unix:%%SOCKETPATH%%:;

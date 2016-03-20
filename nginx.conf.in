@@ -25,16 +25,15 @@ http {
 
     gzip off;
     
-    location @errpages {
-        root @POSTINSTALLPATH@/share/csg2/nginx-default;
-    }
-    
     include /tmp/*.csg2nginx;
     
     server {
         listen 8080 default_server;
 	    listen [::]:8080 default_server;
         error_page 404 =400 @errpages/notavailable.html;
+        location @errpages {
+            root @POSTINSTALLPATH@/share/csg2/nginx-default;
+        }
         location / {
             return 404;
         }
