@@ -30,8 +30,9 @@ http {
     server {
         listen 8080 default_server;
 	    listen [::]:8080 default_server;
-        error_page 404 =400 @errpages/notavailable.html;
-        location @errpages {
+        error_page 404 =400 /_/err/notavailable.html;
+        location /_/err/ {
+            internal;
             root @POSTINSTALLPATH@/share/csg2/nginx-default;
         }
         location / {
