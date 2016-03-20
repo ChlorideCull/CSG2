@@ -17,6 +17,40 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 import sys
+import os
+import pwd
+import subprocess
+
+# Get new user ID
+try:
+    pwdinfo = pwd.getpwnam("@SERVUSERNAME@")
+except (KeyError):
+    # User doesn't exist, create it
+    subprocess.call([
+        '@USERADDBIN@',
+        '--home', '@POSTINSTALLPATH@/share/csg2/',
+        '--system',
+        '--shell', '/bin/false',
+        '@SERVUSERNAME@'
+    ], stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    pwdinfo = pwd.getpwnam("@SERVUSERNAME@")
+
+userid = pwdinfo.pw_uid
+groupid = pwdinfo.pw_gid
+
+# Create directories if they do not exist
+if not os.is_dir("/var/log/csg2"):
+    os.mkdir("/var/log/csg2", mode=0o770)
+    os.chown("/var/log/csg2", userid, groupid)
+if not os.is_dir("/srv/csg2"):
+    os.mkdir("/srv/csg2", mode=0o775)
+    os.chown("/srv/csg2", userid, groupid)
+
+# Drop privileges
+os.setgid(groupid)
+os.setuid(userid)
+
+# Start actual server
 sys.path[0] = "@POSTINSTALLPATH@/share/csg2/"
 from serve import CSG2Server
 csg2themedir = "@POSTINSTALLPATH@/share/csg2/themes"
