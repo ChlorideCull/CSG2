@@ -6,7 +6,7 @@ server {
     error_page 504 /_/err/timeout.html;
     location /_/err/ {
         internal;
-        root @POSTINSTALLPATH@/share/csg2/nginx-default;
+        root @POSTINSTALLPATH@/share/csg2/nginx-default/;
     }
 	location / {
 		proxy_pass http://unix:%%SOCKETPATH%%:;
