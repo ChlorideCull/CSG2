@@ -39,10 +39,15 @@ userid = pwdinfo.pw_uid
 groupid = pwdinfo.pw_gid
 
 # Create directories if they do not exist
-if not os.is_dir("/var/log/csg2"):
+try:
+    os.stat("/var/log/csg2")
+except (FileNotFoundError):
     os.mkdir("/var/log/csg2", mode=0o770)
     os.chown("/var/log/csg2", userid, groupid)
-if not os.is_dir("/srv/csg2"):
+
+try:
+    os.stat("/srv/csg2")
+except (FileNotFoundError):
     os.mkdir("/srv/csg2", mode=0o775)
     os.chown("/srv/csg2", userid, groupid)
 
