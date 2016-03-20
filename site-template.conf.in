@@ -5,6 +5,7 @@ server {
     location @errpages {
         root @POSTINSTALLPATH@/share/csg2/nginx-default;
     }
+    error_page 502 @errpages/badgateway.html;
     error_page 504 @errpages/timeout.html;
 	location / {
 		proxy_pass http://unix:%%SOCKETPATH%%:;
