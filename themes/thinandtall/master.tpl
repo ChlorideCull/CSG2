@@ -8,6 +8,7 @@
         % for lnk in link_elements:
         <link rel="{{lnk[0]}}" href="{{lnk[1]}}">
         % end
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script> 
     </head>
     <body>
         <header>
@@ -16,7 +17,7 @@
                 % for pge in nav_links:
                 <h1><a href="{{pge[0]}}">{{pge[1]}}</a></h1>
                 % end
-                <h1 id="dropdown"><a>A</a></h1>
+                <h1 id="dropdown"><a>?</a></h1>
                 <div id="dropdown-container">
                     % if not is_authenticated:
                     <form action="/login" method="post">
@@ -35,5 +36,6 @@
         <div id="pagecontent">
         % include(content)
         </div>
+        <script src="/theme/static/dropdown.js"></script> 
     </body>
 </html>

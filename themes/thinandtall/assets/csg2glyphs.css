@@ -1,9 +1,0 @@
-@font-face {
-    font-family: 'csg2glyphs';
-    src: url('/theme/static/fonts/csg2glyphs.eot');
-    src: url('/theme/static/fonts/csg2glyphs.eot?#iefix') format('embedded-opentype'),
-         url('/theme/static/fonts/csg2glyphs.woff') format('woff'),
-         url('/theme/static/fonts/csg2glyphs.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
