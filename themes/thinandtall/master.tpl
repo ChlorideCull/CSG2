@@ -21,6 +21,7 @@
                 <div id="dropdown-container">
                     % if not is_authenticated:
                     <form action="/login" method="post">
+                        <h3>Login</h3>
                         <input name="user" placeholder="Username" type="text">
                         <input name="password" placeholder="Password" type="password">
                         <input value="Submit" type="submit">

@@ -6,7 +6,7 @@
 
 body {
     background-color: $background-primary;
-    width: 100vw;
+    width: 100%;
     overflow-x: hidden;
     min-height: 100vh;
     color: $text-color;
@@ -51,6 +51,18 @@ header {
             width: 200px;
             background-color: darken($background-primary, 10%);
             color: $text-color;
+            padding: 10px;
+            box-sizing: border-box;
+            
+            a {
+                display: block;
+            }
+            
+            form {
+                input {
+                    width: 100%;
+                }
+            }
         }
     }
     
