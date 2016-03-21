@@ -39,23 +39,14 @@ header {
             color: $page-link-color;
             text-decoration: none;
             transition: color linear .25s;
-        }
-
-        a:hover {
-            color: $page-link-color-hover;
-        }
-        
-        #dropdown {
-            display: inline-block;
-            width: 64px;
-            height: 64px;
-            background-image: url('/theme/static/dropdown.svg');
-            background-size: contain;
-            background-repeat: no-repeat;
             
             #dropdown-container {
                 display: none;
             }
+        }
+
+        a:hover {
+            color: $page-link-color-hover;
         }
     }
     
