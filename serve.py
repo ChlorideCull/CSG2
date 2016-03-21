@@ -162,7 +162,7 @@ class CSG2Server:
     # Route: "/<navpath:path>"
     def catchall(self, navpath="index"):
         pageindex = -1
-        tplargs = False
+        tplargs = ()
         for i in range(0, len(self.siteconf["pages"])-1):
             testmatch = self._match_page(navpath, self.siteconf["pages"][i]["navpath"])
             if type(testmatch) is tuple:
@@ -191,7 +191,8 @@ class CSG2Server:
             "cog_links": [("/" + k["navpath"], k["title"],) for k in self.siteconf["pages"] if ((k["position"] == "cog") and ((k["require_auth"] == False) or ((k["require_auth"] == True) and (request.get_cookie("csg2sess") in self.runningsessions))))],
             "content": templatepath,
             "csg2api": self.apiclass,
-            "is_authenticated": (request.get_cookie("csg2sess") in self.runningsessions)
+            "is_authenticated": (request.get_cookie("csg2sess") in self.runningsessions),
+            "pathargs": tplargs
         }
 
     #Route: "/login", method="POST"
