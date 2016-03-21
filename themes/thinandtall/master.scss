@@ -45,13 +45,11 @@ header {
             color: $page-link-color-hover;
         }
         
-        #dropdown {
-            font-family: 'csg2glyphs';
-        }
-        
         #dropdown-container {
             display: none;
             position: absolute;
+            width: 200px;
+            margin-left: -200px;
         }
     }
     
