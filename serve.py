@@ -150,7 +150,7 @@ class CSG2Server:
     def _match_page(self, requestpath, pagenavpath):
         if "%%" in pagenavpath:
             pagenavpathregex = re.escape(pagenavpath).replace("%%", "([^/]+)")
-            matchobj = re.match(pagenavpathregex)
+            matchobj = re.match(pagenavpathregex, requestpath)
             if matchobj == None:
                 return False
             else:
@@ -163,7 +163,7 @@ class CSG2Server:
     def catchall(self, navpath="index"):
         pageindex = -1
         tplargs = ()
-        for i in range(0, len(self.siteconf["pages"])-1):
+        for i in range(0, len(self.siteconf["pages"])):
             testmatch = self._match_page(navpath, self.siteconf["pages"][i]["navpath"])
             if type(testmatch) is tuple:
                 tplargs = testmatch
