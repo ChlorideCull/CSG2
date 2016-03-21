@@ -68,7 +68,8 @@ class CSG2Server:
                 view(os.path.join(self.themepath, "master.tpl"))(self.catchall)
             )
         )
-        self.dologin = self.wsgiapp.route("/login", method="POST")(self.dologin)
+        self.dologin = self.wsgiapp.route("/auth/login", method="POST")(self.dologin)
+        self.dologout = self.wsgiapp.route("/auth/logout")(self.dologout)
         
         # If they have code, run it
         if "additional_code" in self.siteconf["site"]:
@@ -76,7 +77,7 @@ class CSG2Server:
             sys.path[0] = self.sitepath
             importlib.invalidate_caches()
             with open(os.path.join(self.sitepath, self.siteconf["site"]["additional_code"]), mode="rt") as codefile:
-                sandbox.create_box(codefile.read(), self.wsgiapp, apiclass=self.apiclass) # This file is excempt from the linking clauses in the license, allowing it to be non-(A)GPL.
+                sandbox.create_box(codefile.read(), self.wsgiapp, apiclass=self.apiclass) # This file is exempt from the linking clauses in the license, allowing it to be non-(A)GPL.
             sys.path = oldpath
             importlib.invalidate_caches()
 
@@ -195,17 +196,33 @@ class CSG2Server:
             "pathargs": tplargs
         }
 
-    #Route: "/login", method="POST"
+    # Route: "/auth/login", method="POST"
     def dologin(self):
         if self.apiclass.authhook == None:
             response.status = "303 No Need To Log In"
+            response.set_header("Location", "/")
             return ""
         if self.apiclass.authhook(request.forms.user, request.forms.password):
             uid = uuid.uuid4().hex + uuid.uuid4().hex
             response.set_cookie("csg2sess", uid)
             self.runningsessions[uid] = request.forms.user
             response.status = "303 Successfully Logged In"
+            response.set_header("Location", "/")
             return ""
         else:
             response.status = "303 Incorrect Credentials"
+            response.set_header("Location", "/")
+            return ""
+
+    # Route: "/auth/logout"
+    def dologout(self):
+        if self.apiclass.authhook == None:
+            response.status = "303 No Need To Log Out"
+            response.set_header("Location", "/")
+            return ""
+        else:
+            response.delete_cookie("csg2sess")
+            del self.runningsessions[uid]
+            response.status = "303 Successfully Logged Out"
+            response.set_header("Location", "/")
             return ""

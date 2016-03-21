@@ -20,12 +20,14 @@
                 <h1 id="dropdown"><a>?</a></h1>
                 <div id="dropdown-container">
                     % if not is_authenticated:
-                    <form action="/login" method="post">
+                    <form action="/auth/login" method="post">
                         <h3>Login</h3>
                         <input name="user" placeholder="Username" type="text">
                         <input name="password" placeholder="Password" type="password">
                         <input value="Submit" type="submit">
                     </form>
+                    % else:
+                    <a href="/auth/logout">Logout</a>
                     % end
                     % for pge in cog_links:
                     <a href="{{pge[0]}}">{{pge[1]}}</a>
