@@ -44,6 +44,12 @@ header {
         a:hover {
             color: $page-link-color-hover;
         }
+        
+        #dropdown {
+            background-image: url('/theme/static/dropdown.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
     }
     
     .title {

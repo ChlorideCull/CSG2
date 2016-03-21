@@ -27,6 +27,7 @@ import sys
 import glob
 import random
 import uuid
+import re
 import sandbox
 import configman
 
@@ -63,7 +64,7 @@ class CSG2Server:
         self.getthemeasset = self.wsgiapp.route("/theme/static/<filepath:path>")(self.getthemeasset)
         self.compilesass = self.wsgiapp.route("/sass/<filename:re:.*\.scss>")(self.compilesass)
         self.catchall = self.wsgiapp.route("/")(
-            self.wsgiapp.route("/<filepath:path>")(
+            self.wsgiapp.route("/<navpath:path>")(
                 view(os.path.join(self.themepath, "master.tpl"))(self.catchall)
             )
         )
@@ -146,28 +147,39 @@ class CSG2Server:
             output += fl.read()
         return sass.compile(string=output)
 
+    def _match_page(self, requestpath, pagenavpath):
+        if "%%" in pagenavpath:
+            pagenavpathregex = re.escape(pagenavpath).replace("%%", "([^/])")
+            matchobj = re.match(pagenavpathregex)
+            if matchobj == None:
+                return False
+            else:
+                return matchobj.groups()
+        else:
+            return (requestpath == pagenavpath)
+        
     # Route: "/"
-    # Route: "/<filepath:path>"
-    def catchall(self, filepath="index"):
-        if filepath[-1] == "/":
-            filepath = filepath[:-1]
+    # Route: "/<navpath:path>"
+    def catchall(self, navpath="index"):
         pageindex = -1
+        tplargs = False
         for i in range(0, len(self.siteconf["pages"])-1):
-            if self.siteconf["pages"][i]["path"] == filepath:
+            testmatch = self._match_page(navpath, self.siteconf["pages"][i]["navpath"])
+            if type(testmatch) is tuple:
+                tplargs = testmatch
+                testmatch = True
+            if testmatch:
                 pageindex = i
                 break
-        templatepath = os.path.join(self.sitepath, filepath + ".tpl")
+        templatepath = os.path.join(self.sitepath, self.siteconf["pages"][pageindex]["path"])
         if not os.path.exists(templatepath):
-            templatepath = os.path.join(self.installdir, "default-files/", filepath + ".tpl")
-            if not os.path.exists(templatepath):
-                response.status = 404
-                return "Page not found :C"
+            response.status = 404
+            return "Page not found :C"
         
         if self.apiclass.authhook != None:
             response.set_header("Cache-Control", "no-cache")
-            if (self.siteconf["pages"][pageindex]["require_auth"]) and (request.get_cookie("csg2sess") not in self.runningsessions) and (filepath != "login"):
+            if (self.siteconf["pages"][pageindex]["require_auth"]) and (request.get_cookie("csg2sess") not in self.runningsessions):
                 response.status = "307 Not Logged In"
-                response.set_header("Location", "/login")
                 return ""
         else:
             response.set_header("Cache-Control", "max-age=300")
@@ -175,25 +187,24 @@ class CSG2Server:
         return {
             "title": self.siteconf["site"]["title"],
             "link_elements": self.siteconf["pages"][pageindex]["link_elements"],
-            "nav_links": [("/" + k["path"], k["title"],) for k in self.siteconf["pages"] if k["hidden"] == False],
+            "nav_links": [("/" + k["navpath"], k["title"],) for k in self.siteconf["pages"] if ((k["position"] == "navbar") and ((k["require_auth"] == False) or ((k["require_auth"] == True) and (request.get_cookie("csg2sess") in self.runningsessions))))],
+            "cog_links": [("/" + k["navpath"], k["title"],) for k in self.siteconf["pages"] if ((k["position"] == "cog") and ((k["require_auth"] == False) or ((k["require_auth"] == True) and (request.get_cookie("csg2sess") in self.runningsessions))))],
             "content": templatepath,
-            "csg2api": self.apiclass
+            "csg2api": self.apiclass,
+            "is_authenticated": (request.get_cookie("csg2sess") in self.runningsessions)
         }
 
     #Route: "/login", method="POST"
     def dologin(self):
         if self.apiclass.authhook == None:
             response.status = "303 No Need To Log In"
-            response.set_header("Location", "/")
             return ""
         if self.apiclass.authhook(request.forms.user, request.forms.password):
             uid = uuid.uuid4().hex + uuid.uuid4().hex
             response.set_cookie("csg2sess", uid)
             self.runningsessions[uid] = request.forms.user
             response.status = "303 Successfully Logged In"
-            response.set_header("Location", "/")
             return ""
         else:
             response.status = "303 Incorrect Credentials"
-            response.set_header("Location", "/login")
             return ""
