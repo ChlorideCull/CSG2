@@ -7,7 +7,7 @@ $(function() {
         $("#dropdown-container").offset(newoffset).css("display", "inline-block").css("margin-left", "-200px");
         button.off("click");
         button.click(function() {
-            $("#dropdown-container").css("display", "none").css("margin-left", "0");
+            $("#dropdown-container").css("display", "none").css("margin-left", "0").css("left", "0").css("top", 0);
             $("#dropdown").off("click");
             $("#dropdown").click(drophandler);
         });
