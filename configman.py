@@ -17,7 +17,7 @@
 #
 import sys
 
-defined_versions = [2]
+defined_versions = [2, 3]
 dropped_versions = [1]
 
 def normalize_config(conf, siteroot):
@@ -42,5 +42,13 @@ def normalize_config(conf, siteroot):
                 conf["pages"][pagekey]["hidden"] = False
                 conf["pages"][pagekey]["require_auth"] = False
                 print("Warning: With implicit upgrade to config version 2, page authentication was disabled.", file=sys.stderr)
+        elif ver == 3: # Bring up to spec with Version 3
+            for pagekey in range(0, len(conf["pages"])):
+                conf["pages"][pagekey]["navpath"] = conf["pages"][pagekey]["path"]
+                conf["pages"][pagekey]["path"] = conf["pages"][pagekey]["path"] + ".tpl"
+                if conf["pages"][pagekey]["hidden"]:
+                    conf["pages"][pagekey]["position"] = "hidden"
+                else:
+                    conf["pages"][pagekey]["position"] = "navbar"
     
     return conf
