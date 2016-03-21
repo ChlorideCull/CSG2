@@ -46,9 +46,16 @@ header {
         }
         
         #dropdown {
+            display: inline-block;
+            width: 64px;
+            height: 64px;
             background-image: url('/theme/static/dropdown.svg');
             background-size: contain;
             background-repeat: no-repeat;
+            
+            #dropdown-container {
+                display: none;
+            }
         }
     }
     
