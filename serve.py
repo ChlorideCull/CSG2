@@ -221,8 +221,8 @@ class CSG2Server:
             response.set_header("Location", "/")
             return ""
         else:
+            del self.runningsessions[request.get_cookie("csg2sess")]
             response.delete_cookie("csg2sess", path="/", httponly=True)
-            del self.runningsessions[uid]
             response.status = "303 Successfully Logged Out"
             response.set_header("Location", "/")
             return ""
