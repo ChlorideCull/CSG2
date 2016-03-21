@@ -1,5 +1,5 @@
 import copy
-from bottle import request
+from bottle import request, response
 
 class csg2api:
     def __init__(self, bottleapp, sessionlist):
@@ -10,6 +10,8 @@ class csg2api:
         return self.app.route(*args, **kwargs)
     def get_request(self):
         return request
+    def get_response(self):
+        return response
     def get_username_of_request(self):
         return self.sessions[request.get_cookie("csg2sess")]
     def auth(self, func):
