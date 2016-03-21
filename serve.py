@@ -149,7 +149,7 @@ class CSG2Server:
 
     def _match_page(self, requestpath, pagenavpath):
         if "%%" in pagenavpath:
-            pagenavpathregex = re.escape(pagenavpath).replace("%%", "([^/]+)")
+            pagenavpathregex = re.escape(pagenavpath).replace("\\%\\%", "([^/]+)")
             matchobj = re.match(pagenavpathregex, requestpath)
             if matchobj == None:
                 return False
