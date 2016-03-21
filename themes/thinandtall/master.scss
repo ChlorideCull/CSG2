@@ -1,3 +1,5 @@
+@import url("/theme/static/csg2glyphs.css")
+
 * {
     margin: 0;
     padding: 0;
@@ -39,14 +41,19 @@ header {
             color: $page-link-color;
             text-decoration: none;
             transition: color linear .25s;
-            
-            #dropdown-container {
-                display: none;
-            }
         }
 
         a:hover {
             color: $page-link-color-hover;
+        }
+        
+        #dropdown {
+            font-family: 'csg2glyphs';
+        }
+        
+        #dropdown-container {
+            display: none;
+            position: absolute;
         }
     }
     

@@ -16,19 +16,18 @@
                 % for pge in nav_links:
                 <h1><a href="{{pge[0]}}">{{pge[1]}}</a></h1>
                 % end
-                <div id="dropdown">
-                    <div id="dropdown-container">
-                        % if not is_authenticated:
-                        <form action="/login" method="post">
-                            <input name="user" placeholder="Username" type="text">
-                            <input name="password" placeholder="Password" type="password">
-                            <input value="Submit" type="submit">
-                        </form>
-                        % end
-                        % for pge in cog_links:
-                        <a href="{{pge[0]}}">{{pge[1]}}</a>
-                        % end
-                    </div>
+                <h1 id="dropdown"><a>A</a></h1>
+                <div id="dropdown-container">
+                    % if not is_authenticated:
+                    <form action="/login" method="post">
+                        <input name="user" placeholder="Username" type="text">
+                        <input name="password" placeholder="Password" type="password">
+                        <input value="Submit" type="submit">
+                    </form>
+                    % end
+                    % for pge in cog_links:
+                    <a href="{{pge[0]}}">{{pge[1]}}</a>
+                    % end
                 </div>
             </nav>
             <div class="clear"></div>
