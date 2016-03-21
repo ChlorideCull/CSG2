@@ -2,7 +2,7 @@ config.json is a configuration file for the site in question.
 
 It has three keys - 'version', 'site' and 'pages'.
 	'version' is a number specifying configuration file version, this document
-	details version 3.
+	details version 2.
 	
 	'site' is a dictionary containing the following keys:
 		'title' which is used as the <title> in every page.
@@ -21,15 +21,12 @@ It has three keys - 'version', 'site' and 'pages'.
 	the following keys:
 		'title' is a string that is used on the navigation bar
 		
-		'navpath' is the path used in the URI. Two percentage signs (%%) will
-		match a path segment (anything with the exception of /) and be placed
-		in a list called "pathargs" which can be used in the tpl file.
+		'path' is the path to the .tpl file, minus the actual file extension.
+		Use a posix style path without a leading slash as it is also used for
+		navigation.
 		
-		'path' is the path to the .tpl file.
-		
-		'position' is a string enum, which is either "navbar", "hidden",
-		or "cog", and specifies where the page link should be placed. Note that
-		it will be forced to "hidden" if the 'navpath' contains %%.
+		'hidden' is a boolean that specifies whether to print the page onto the
+		navigation bar or not.
 		
 		'require_auth' is a boolean that specifies whether authentication is
 		required to access the page, note that the page will error out if there
