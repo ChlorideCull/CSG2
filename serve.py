@@ -204,7 +204,7 @@ class CSG2Server:
             return ""
         if self.apiclass.authhook(request.forms.user, request.forms.password):
             uid = uuid.uuid4().hex + uuid.uuid4().hex
-            response.set_cookie("csg2sess", uid)
+            response.set_cookie("csg2sess", uid, path="/", httponly=True)
             self.runningsessions[uid] = request.forms.user
             response.status = "303 Successfully Logged In"
             response.set_header("Location", "/")
@@ -221,7 +221,7 @@ class CSG2Server:
             response.set_header("Location", "/")
             return ""
         else:
-            response.delete_cookie("csg2sess")
+            response.delete_cookie("csg2sess", path="/", httponly=True)
             del self.runningsessions[uid]
             response.status = "303 Successfully Logged Out"
             response.set_header("Location", "/")
