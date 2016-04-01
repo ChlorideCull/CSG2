@@ -152,7 +152,7 @@ class CSG2Server:
         if filepath[-1] == "/":
             filepath = filepath[:-1]
         pageindex = -1
-        for i in range(0, len(self.siteconf["pages"])-1):
+        for i in range(0, len(self.siteconf["pages"])):
             if self.siteconf["pages"][i]["path"] == filepath:
                 pageindex = i
                 break
