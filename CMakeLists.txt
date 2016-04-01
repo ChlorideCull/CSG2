@@ -5,7 +5,7 @@ option(ENABLE_SYSTEMD "Generate a systemd service" ON)
 set(POSTINSTALLPATH ${CMAKE_INSTALL_PREFIX})
 set(SERVUSERNAME "mediacouriersrv")
 
-install(FILES serve.py sandbox.py configman.py DESTINATION share/csg2)
+install(FILES serve.py sandbox.py configman.py bottle.py DESTINATION share/csg2)
 install(DIRECTORY docs DESTINATION share/doc/csg2)
 install(DIRECTORY themes DESTINATION share/csg2)
 install(DIRECTORY default-files DESTINATION share/csg2)
