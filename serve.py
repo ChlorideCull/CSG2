@@ -226,3 +226,37 @@ class CSG2Server:
             response.status = "303 Successfully Logged Out"
             response.set_header("Location", "/")
             return ""
+    
+    def __call__(self, environ, start_response):
+        """ WSGI interface """
+        method = environ["REQUEST_METHOD"]
+        path = os.path.join("/", environ["PATH_INFO"], environ["SCRIPT_NAME"]) # We only support POSIX, so...
+        logging.info("{} {}".format(method, path))
+        self.threadlocal["errout"] = environ["wsgi.errors"]
+        self.threadlocal["httpinput"] = environ["wsgi.input"]
+        self.threadlocal["wsgienviron"] = environ
+        
+        for definedroute in self.route_res:
+            if definedroute[0] != method:
+                continue
+            reresult = definedroute[1][2].match(path)
+            if reresult:
+                callable_args = []
+                callable_kwargs = {}
+                for i in range(1, definedroute[1][0]+1):
+                    callable_args.append(reresult.group(i))
+                for k in definedroute[1][1]:
+                    callable_kwargs[k] = reresult.group(k)
+                
+                callableresult = definedroute[2](*callable_args, **callable_kwargs)
+                callableheaders = self.threadlocal["_httpresponseobj"].headers
+                
+                respheaders = [(key, callableheaders[key]) for key in callableheaders]
+                callablecookies = self.threadlocal["_httpresponseobj"].cookies.output()
+                for line in callablecookies.split('\r\n'):
+                    for left,right in line.split(':', 1):
+                        respheaders.append((left, right.lstrip()))
+            
+                callablestatus = self.threadlocal["_httpresponseobj"].status
+                start_response("{} {}".format(status[0], status[1]), respheaders)
+                return [callableresult]
