@@ -1,19 +1,24 @@
 import copy
-from bottle import request, response
+import csgwsgiclasses
 
 class csg2api:
-    def __init__(self, bottleapp, sessionlist):
+    def __init__(self, bottleapp, sessionlist, threadlocal):
         self.app = bottleapp
         self.authhook = None
         self.sessions = sessionlist
-    def route(self, *args, **kwargs):
-        return self.app.route(*args, **kwargs)
+        self.localdata = threadlocal
+    def route(self, routestr, method='GET'):
+        return lambda callable: self.app.add_route(routestr, callable, method)
     def get_request(self):
-        return request
+        if "_httprequestobj" not in self.localdata:
+            self.localdata["_httprequestobj"] = csgwsgiclasses.HTTPRequest(self.localdata)
+        return self.localdata["_httprequestobj"]
     def get_response(self):
-        return response
+        if "_httpresponseobj" not in self.localdata:
+            self.localdata["_httpresponseobj"] = csgwsgiclasses.HTTPResponse(self.localdata)
+        return self.localdata["_httpresponseobj"]
     def get_username_of_request(self):
-        return self.sessions[request.get_cookie("csg2sess")]
+        return self.sessions[csgwsgiclasses.HTTPRequest(self.localdata).get_cookies()["csg2sess"].value]
     def auth(self, func):
         self.authhook = func
 
